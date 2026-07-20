@@ -156,7 +156,7 @@ for section, features in feature_groups.items():
         with current_col:
             label = feature_labels.get(feature, feature)
             
-            if df[feature].dtype == "object":
+            if df[feature].dtype == "object" or str(df[feature].dtype) == "string":
             
                 user_input[feature] = st.selectbox(
                     label,
@@ -186,7 +186,7 @@ for i, feature in enumerate(remaining_features):
     with current_col:
         label = feature_labels.get(feature, feature)
 
-        if df[feature].dtype == "object":
+        if df[feature].dtype == "object" or str(df[feature].dtype) == "string":
 
             user_input[feature] = st.selectbox(
                 label,
