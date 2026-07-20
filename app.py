@@ -164,9 +164,10 @@ for section, features in feature_groups.items():
                 )
 
             else:
+                numerical_col = pd.to_numeric(df[feature],errors='coerce')
                 user_input[feature] = st.number_input(
                     label,
-                    value=float(df[feature].median())
+                    value=float(numerical_col.median())
                 )
 
 remaining_features = [
@@ -193,10 +194,11 @@ for i, feature in enumerate(remaining_features):
             )
 
         else:
+            numerical_col = pd.to_numeric(df[feature],errors='coerce')
             user_input[feature] = st.number_input(
                 label,
-                value=float(df[feature].median())
-            )
+                value=float(numerical_col.median())
+                )
 
 input_df = pd.DataFrame([user_input])
 
