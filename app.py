@@ -157,13 +157,14 @@ for section, features in feature_groups.items():
             label = feature_labels.get(feature, feature)
             
             if df[feature].dtype == "object":
+            
                 user_input[feature] = st.selectbox(
                     label,
                     sorted(df[feature].dropna().unique())
                 )
 
             else:
-                    user_input[feature] = st.number_input(
+                user_input[feature] = st.number_input(
                     label,
                     value=float(df[feature].median())
                 )
@@ -192,7 +193,7 @@ for i, feature in enumerate(remaining_features):
             )
 
         else:
-            label = feature_labels.get(feature, feature)
+            user_input[feature] = st.number_input(
                 label,
                 value=float(df[feature].median())
             )
