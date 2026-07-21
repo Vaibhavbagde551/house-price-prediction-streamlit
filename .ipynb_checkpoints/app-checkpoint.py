@@ -17,10 +17,6 @@ st.write("Enter the house details below to predict the selling price")
 
 st.write("Shape:", df.shape)
 
-st.write(df[["MSZoning", "Neighborhood", "HouseStyle"]].dtypes)
-
-st.write(df[["MSZoning", "Neighborhood", "HouseStyle"]].head())
-
 st.divider()
 columns = df.columns.tolist()
 
@@ -164,7 +160,7 @@ for section, features in feature_groups.items():
             
                 user_input[feature] = st.selectbox(
                     label,
-                    sorted(df[feature].dropna().astype(str).tolist()), key=feature
+                    sorted(df[feature].dropna().astype(str).unique()), key=feature
                 )
 
             else:
@@ -194,7 +190,7 @@ for i, feature in enumerate(remaining_features):
 
             user_input[feature] = st.selectbox(
                 label,
-               sorted(df[feature].dropna().astype(str).tolist()), key=feature
+               sorted(df[feature].dropna().astype(str).unique()), key=feature
             )
 
         else:
