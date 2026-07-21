@@ -15,8 +15,6 @@ df = df.drop(columns=['Id','SalePrice'])
 st.title("House Price Prediction")
 st.write("Enter the house details below to predict the selling price")
 
-st.write("Shape:", df.shape)
-
 st.divider()
 columns = df.columns.tolist()
 
