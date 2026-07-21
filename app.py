@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from pandas.api.types import is_numeric_dtype
 
 st.set_page_config(page_title="House Price Prediction",layout='wide')
 
@@ -14,10 +15,13 @@ df = df.drop(columns=['Id','SalePrice'])
 st.title("House Price Prediction")
 st.write("Enter the house details below to predict the selling price")
 
+st.write("Shape:", df.shape)
+
+st.write(df[["MSZoning", "Neighborhood", "HouseStyle"]].dtypes)
+
+st.write(df[["MSZoning", "Neighborhood", "HouseStyle"]].head())
+
 st.divider()
-
-col1,col2 = st.columns(2)
-
 columns = df.columns.tolist()
 
 
@@ -156,18 +160,18 @@ for section, features in feature_groups.items():
         with current_col:
             label = feature_labels.get(feature, feature)
             
-            if df[feature].dtype == "object" or str(df[feature].dtype) == "string":
+            if not is_numeric_dtype(df[feature]):
             
                 user_input[feature] = st.selectbox(
                     label,
-                    sorted(df[feature].dropna().unique())
+                    sorted(df[feature].dropna().astype(str).tolist()), key=feature
                 )
 
             else:
                 numerical_col = pd.to_numeric(df[feature],errors='coerce')
                 user_input[feature] = st.number_input(
                     label,
-                    value=float(numerical_col.median())
+                    value=float(numerical_col.median()), key=feature
                 )
 
 remaining_features = [
@@ -186,18 +190,18 @@ for i, feature in enumerate(remaining_features):
     with current_col:
         label = feature_labels.get(feature, feature)
 
-        if df[feature].dtype == "object" or str(df[feature].dtype) == "string":
+        if not is_numeric_dtype(df[feature]):
 
             user_input[feature] = st.selectbox(
                 label,
-                sorted(df[feature].dropna().unique())
+               sorted(df[feature].dropna().astype(str).tolist()), key=feature
             )
 
         else:
             numerical_col = pd.to_numeric(df[feature],errors='coerce')
             user_input[feature] = st.number_input(
                 label,
-                value=float(numerical_col.median())
+                value=float(numerical_col.median()), key=feature
                 )
 
 input_df = pd.DataFrame([user_input])
